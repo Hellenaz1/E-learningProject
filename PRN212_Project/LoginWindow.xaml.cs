@@ -16,9 +16,16 @@ namespace PRN212_Project
     /// </summary>
     public partial class MainWindow : Window
     {
+        SignUpWindow SignUpWindow = new SignUpWindow();
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            SignUpWindow.ShowDialog();
         }
     }
 }
