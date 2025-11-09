@@ -28,7 +28,7 @@
                     <Button 
                          Content="Đăng Ký Ngay" Width="120"
                          Foreground="Black" Padding="0 10"
-                         Background="Transparent" BorderThickness="0" Click="Button_Click"                       
+                         Background="Transparent" BorderThickness="0" Click="Button_Click_Register"                       
                          />
                 </Border>
 
@@ -55,17 +55,17 @@
                            Margin="0 0 0 20"/>
 
                 <Image Grid.Column="0" Grid.Row="1" Source="/Image/user.png" Width="20" Height="20"/>
-                <TextBox Grid.Column="1" Grid.Row="1" Margin="0,5,0,5"></TextBox>
+                <TextBox x:Name="tbLoginName" Grid.Column="1" Grid.Row="1" Margin="0,5,0,5"></TextBox>
 
                 <Image Grid.Column="0" Grid.Row="2" Source="/Image/padlock.png" Width="20" Height="20"/>
-                <TextBox Grid.Column="1" Grid.Row="2" Margin="0,5,0,5"></TextBox>
+                <PasswordBox x:Name="pwPassword" Grid.Column="1" Grid.Row="2" Margin="0,5,0,5"></PasswordBox>
 
                 <Border Grid.Row="3" Grid.ColumnSpan="2" CornerRadius="20" BorderBrush="Black" BorderThickness="1" Width="200"  Height="50" Margin="0 10 0 0">
                     <Button 
                          Content="Đăng Nhập" Width="120"
                         FontSize="15"
                          Foreground="Black" Padding=" 10"
-                         Background="Transparent" BorderThickness="0" Margin="39,0,39,-1" />
+                         Background="Transparent" BorderThickness="0" Margin="39,0,39,-1" Click="Button_Click_Login" />
                 </Border>
             </Grid>
 
