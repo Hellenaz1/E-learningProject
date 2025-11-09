@@ -59,7 +59,6 @@ namespace PRN212_Project.Repositories
                 q = q.Where(e => e.Course.Language == language);
 
             //sort
-            
                 q = sortTag switch
                 {
                     "enrolledAsc" => q.OrderBy(e => e.EnrolledAt),
@@ -68,7 +67,6 @@ namespace PRN212_Project.Repositories
                     "titleDesc" => q.OrderByDescending(e => e.Course.Title),
                     _ => q.OrderBy(e => e.EnrolledAt)
                 };
-           
 
             return q.ToList();
         }
