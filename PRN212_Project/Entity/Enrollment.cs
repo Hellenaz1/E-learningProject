@@ -11,7 +11,7 @@ public partial class Enrollment
 
     public int StudentId { get; set; }
 
-    public DateTime EnrolledAt { get; set; }
+    public DateOnly EnrolledAt { get; set; }
 
     public virtual Course Course { get; set; } = null!;
 

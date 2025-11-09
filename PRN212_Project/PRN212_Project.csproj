@@ -3,12 +3,14 @@
 	<ItemGroup>
 	  <None Remove="Image\background_dangky.jpg" />
 	  <None Remove="Image\padlock.png" />
+	  <None Remove="Image\signup.jpg" />
 	  <None Remove="Image\user.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Resource Include="Image\background_dangky.jpg" />
 	  <Resource Include="Image\padlock.png" />
+	  <Resource Include="Image\signup.jpg" />
 	  <Resource Include="Image\user.png" />
 	</ItemGroup>
 

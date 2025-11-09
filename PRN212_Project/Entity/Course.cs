@@ -17,7 +17,7 @@ public partial class Course
 
     public decimal? Price { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateOnly CreatedAt { get; set; }
 
     public int? CategoryId { get; set; }
 
