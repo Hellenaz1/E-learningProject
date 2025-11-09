@@ -2,10 +2,19 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="ChangePasswordWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CourseDetailWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="SignUpWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="StudentHome.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UpdateStudentProfile.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

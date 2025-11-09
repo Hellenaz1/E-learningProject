@@ -7,6 +7,116 @@
         mc:Ignorable="d"
         Title="StudentHome" Height="650" Width="1000">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="20"/>
+
+            <RowDefinition Height="Auto" />
+
+        </Grid.RowDefinitions>
+
+        <!--Welcome-->
+        <TextBlock x:Name="tbWelcome" Text="Xin chào học sinh: "  Grid.Row="0" FontSize="20" FontWeight="Bold" Margin=" 10 20 0 0"/>
+
+        <!--Dieu huong-->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+            <Button Content="Tìm khóa học" Width="140" Height="32" Margin="20,0,8,0"
+                    Click="BtnBrowseCourses_Click"/>
+            <Button Content="Cập nhật hồ sơ" Width="140" Height="32" Margin="20,0,8,0"
+                    Click="BtnUpdateProfile_Click"/>
+            <Button Content="Đổi mật khẩu" Width="140" Height="32" Margin="20,0,8,0"
+                    Click="BtnChangePassword_Click"/>
+        </StackPanel>
+
+        <!--Search course-->
+        <StackPanel Grid.Row="4" Orientation="Vertical" Margin="10 0">
+            <!--Thanh seach-->
+            <StackPanel Orientation="Horizontal" Height="30">
+                <TextBlock Text="Tìm khóa học đã ghi danh: " FontSize="15" VerticalAlignment="Center"/>
+                <TextBox x:Name="tbSearchKey" Width="550" Margin="40 0 50 0" VerticalAlignment="Center" Height="25"/>
+                <Button Content="Tìm Kiếm" Width="130" Height="26" Click="ButtonSearch_Click"/>
+            </StackPanel>
+
+            <!--sort va filter-->
+            <Grid Margin="0 20 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Sort -->
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Category -->
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Level -->
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Language -->
+                </Grid.ColumnDefinitions>
+
+                <!--Sort-->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Sắp xếp:" Margin="0,0,6,0" VerticalAlignment="Center" FontSize="15"/>
+                    <ComboBox x:Name="cbSort" Width="180" FontSize="14">
+                        <ComboBoxItem Content="Nhập học sớm nhất" Tag="enrolledAsc" IsSelected="True"/>
+                        <ComboBoxItem Content="Nhập học muộn trước" Tag="enrolledDesc"/>
+                        <ComboBoxItem Content="Tên A–Z" Tag="titleAsc"/>
+                        <ComboBoxItem Content="Tên Z–A" Tag="titleDesc"/>
+                    </ComboBox>
+                </StackPanel>
+                
+                <!-- Category -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Danh mục:" Margin="10,0,6,0" VerticalAlignment="Center" FontSize="15"/>
+                    <ComboBox x:Name="cbCategory" Width="200" FontSize="14"/>
+                </StackPanel>
+
+                <!-- Level -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Trình độ:" Margin="10,0,6,0" VerticalAlignment="Center" FontSize="15"/>
+                    <ComboBox x:Name="cbLevel" Width="130" FontSize="14" />
+                </StackPanel>
+                
+                <!-- Language -->
+                <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Ngôn ngữ:" Margin="10,0,6,0" VerticalAlignment="Center" FontSize="15" />
+                    <ComboBox x:Name="cbLanguage" Width="130" FontSize="14" />
+                </StackPanel>
+            </Grid>
+
+        </StackPanel>
+
+        <!--List cac enroll coure-->
+        <DataGrid x:Name="dgEnrolled"
+            Grid.Row="6" AutoGenerateColumns="False"
+            CanUserAddRows="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Tiêu đề"
+                        Binding="{Binding Title}"
+                        Width="3*"/>
+                <DataGridTextColumn Header="Danh mục"
+                        Binding="{Binding Category}"
+                        Width="2*"/>
+                <DataGridTextColumn Header="Trình độ"
+                        Binding="{Binding Level}"
+                        Width="2*"/>
+                <DataGridTextColumn Header="Ngôn ngữ"
+                        Binding="{Binding Language}"
+                        Width="2*"/>
+                <DataGridTextColumn Header="Ngày nhạp học"
+                        Binding="{Binding EnrollAtDisplay}"
+                        Width="2*"/>
+                <DataGridTemplateColumn Header="Thao tác" Width="2*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Chi Tiết" Click="BtnDetail_Click" Tag="{Binding CourseId}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
         
     </Grid>
 </Window>

@@ -11,7 +11,7 @@ namespace PRN212_Project.Services
     public class UserService
     {
         private UserRepository _userRepo = new UserRepository();
-        public (bool OK, string ? Error) Register(string username, string email, string password, string gender)
+        public (bool OK, string? Error) Register(string username, string email, string password, string gender)
         {
             if (string.IsNullOrWhiteSpace(username))
                 return (false, "Không được để trống tên đăng nhập");
@@ -52,7 +52,7 @@ namespace PRN212_Project.Services
            pass.Any(ch => !char.IsLetterOrDigit(ch));
 
 
-        public (bool OK, string? Error, User? User ) Login(string loginName, string password)
+        public (bool OK, string? Error, User? User) GetUserByNameAndPassword(string loginName, string password)
         {
             if (string.IsNullOrWhiteSpace(loginName))
                 return (false, "Vui lòng nhập tên đăng nhập hoặc email", null);
@@ -60,7 +60,7 @@ namespace PRN212_Project.Services
                 return (false, "Vui lòng nhập mật khẩu", null);
 
             var user = _userRepo.findUserByUserNameOrEmail(loginName);
-            if(user == null)
+            if (user == null)
             {
                 return (false, "Tài khoản không tồn tại", null);
             }
@@ -74,5 +74,23 @@ namespace PRN212_Project.Services
 
             return (true, null, user);
         }
+
+        public (bool OK, string? Error) ChangePassword(User user, string oldPassword, string newPassword)
+        {
+            if (string.IsNullOrWhiteSpace(oldPassword) || string.IsNullOrWhiteSpace(newPassword))
+                return (false, "Vui lòng nhập đầy đủ thông tin");
+
+            if (!IsStrong(newPassword))
+                return (false, "Mật khẩu mới quá yếu. Tối thiểu 6 ký tự, có chữ, số và ký tự đặc biệt");
+
+            if (!BCrypt.Net.BCrypt.Verify(oldPassword, user.Password))
+            {
+                return (false, "Mật khẩu hiện tại không đúng");
+            }
+            string newHashPassword = BCrypt.Net.BCrypt.HashPassword(newPassword, workFactor: 12);
+            _userRepo.UpdatePassword(user.UserId, newHashPassword);
+            return (true, null);
+        }
+        
     }
 }
