@@ -22,6 +22,7 @@ namespace PRN212_Project
     public partial class StudentHome : Window
     {
         private ChangePasswordWindow _changePasswordWindow;
+        private UpdateStudentProfile _updateStudentProfile;
         private User _currentStudent;
         private CourseService _courseService;
         public StudentHome(User student)
@@ -121,7 +122,9 @@ namespace PRN212_Project
 
         private void BtnUpdateProfile_Click(object sender, RoutedEventArgs e)
         {
-
+            _updateStudentProfile = new UpdateStudentProfile(_currentStudent);
+            _updateStudentProfile.Show();
+            this.Close();
         }
 
         private void BtnChangePassword_Click(object sender, RoutedEventArgs e)
