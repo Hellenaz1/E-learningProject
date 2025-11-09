@@ -31,13 +31,13 @@ public partial class PrnProjectContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=(local);Database=PRN_Project;User Id=sa;Password=123;TrustServerCertificate=true;Trusted_Connection=SSPI;Encrypt=false;");
+        => optionsBuilder.UseSqlServer("Data Source=(local);Database=PRN_Project;User Id=sa;Password=123;TrustServerCertificate=true;Encrypt=false");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AdminProfile>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__AdminPro__B9BE370F5C37284D");
+            entity.HasKey(e => e.UserId).HasName("PK__AdminPro__B9BE370F022BDAF0");
 
             entity.ToTable("AdminProfile");
 
@@ -58,9 +58,9 @@ public partial class PrnProjectContext : DbContext
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__D54EE9B45A7BAF47");
+            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__D54EE9B4D7F5F805");
 
-            entity.HasIndex(e => e.Name, "UQ__Categori__72E12F1B65CA7860").IsUnique();
+            entity.HasIndex(e => e.Name, "UQ__Categori__72E12F1BF04F66DE").IsUnique();
 
             entity.Property(e => e.CategoryId).HasColumnName("category_id");
             entity.Property(e => e.Description)
@@ -73,7 +73,7 @@ public partial class PrnProjectContext : DbContext
 
         modelBuilder.Entity<Course>(entity =>
         {
-            entity.HasKey(e => e.CourseId).HasName("PK__Courses__8F1EF7AE2B177AE5");
+            entity.HasKey(e => e.CourseId).HasName("PK__Courses__8F1EF7AEA9750C4D");
 
             entity.Property(e => e.CourseId).HasColumnName("course_id");
             entity.Property(e => e.CategoryId).HasColumnName("category_id");
@@ -87,9 +87,6 @@ public partial class PrnProjectContext : DbContext
             entity.Property(e => e.Level)
                 .HasMaxLength(50)
                 .HasColumnName("level");
-            entity.Property(e => e.Price)
-                .HasColumnType("decimal(10, 2)")
-                .HasColumnName("price");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
                 .HasColumnName("title");
@@ -101,9 +98,9 @@ public partial class PrnProjectContext : DbContext
 
         modelBuilder.Entity<Enrollment>(entity =>
         {
-            entity.HasKey(e => e.EnrollmentId).HasName("PK__Enrollme__6D24AA7A6E61D8C0");
+            entity.HasKey(e => e.EnrollmentId).HasName("PK__Enrollme__6D24AA7AC38CF918");
 
-            entity.HasIndex(e => new { e.CourseId, e.StudentId }, "UQ__Enrollme__3DBDC7C6E57DE7FA").IsUnique();
+            entity.HasIndex(e => new { e.CourseId, e.StudentId }, "UQ__Enrollme__3DBDC7C67F88C775").IsUnique();
 
             entity.Property(e => e.EnrollmentId).HasColumnName("enrollment_id");
             entity.Property(e => e.CourseId).HasColumnName("course_id");
@@ -123,9 +120,9 @@ public partial class PrnProjectContext : DbContext
 
         modelBuilder.Entity<Review>(entity =>
         {
-            entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__60883D905D994B66");
+            entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__60883D90D444F3B5");
 
-            entity.HasIndex(e => new { e.CourseId, e.StudentId }, "UQ__Reviews__3DBDC7C63FCBD61B").IsUnique();
+            entity.HasIndex(e => new { e.CourseId, e.StudentId }, "UQ__Reviews__3DBDC7C68FF2AE27").IsUnique();
 
             entity.Property(e => e.ReviewId).HasColumnName("review_id");
             entity.Property(e => e.Comment)
@@ -149,7 +146,7 @@ public partial class PrnProjectContext : DbContext
 
         modelBuilder.Entity<StudentProfile>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__StudentP__B9BE370FBEC38650");
+            entity.HasKey(e => e.UserId).HasName("PK__StudentP__B9BE370F4E240670");
 
             entity.ToTable("StudentProfile");
 
@@ -173,13 +170,13 @@ public partial class PrnProjectContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__B9BE370F94308AC6");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__B9BE370F2D5E424D");
 
             entity.ToTable(tb => tb.HasTrigger("trg_CreateProfile"));
 
-            entity.HasIndex(e => e.Email, "UQ__Users__AB6E616440036987").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Users__AB6E61642C16CEEF").IsUnique();
 
-            entity.HasIndex(e => e.Username, "UQ__Users__F3DBC572FB5724AA").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__Users__F3DBC57271872B98").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
             entity.Property(e => e.CreatedAt)

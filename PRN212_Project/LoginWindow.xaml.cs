@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using PRN212_Project.Services;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,16 +17,36 @@ namespace PRN212_Project
     /// </summary>
     public partial class MainWindow : Window
     {
-        SignUpWindow SignUpWindow = new SignUpWindow();
+        private StudentHome studentHome;
+        private UserService userService = new UserService();
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click_Register(object sender, RoutedEventArgs e)
         {
+            var signUp = new SignUpWindow();
+            signUp.Show();
             this.Close();
-            SignUpWindow.ShowDialog();
+        }
+
+        private void Button_Click_Login(object sender, RoutedEventArgs e)
+        {
+            var result = userService.Login(tbLoginName.Text, pwPassword.Password);
+            if (!result.OK)
+            {
+                MessageBox.Show(result.Error, "Lỗi đăng nhập");
+                return;
+            }
+            if(result.User.Role == "student")
+            {
+                studentHome = new StudentHome(result.User);
+                studentHome.Show();
+                this.Close();
+            }
+
+
         }
     }
 }
