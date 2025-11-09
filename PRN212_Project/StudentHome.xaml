@@ -111,7 +111,7 @@
                 <DataGridTemplateColumn Header="Thao tác" Width="2*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Chi Tiết" Click="BtnDetail_Click"/>
+                            <Button Content="Chi Tiết" Click="BtnDetail_Click" Tag="{Binding CourseId}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

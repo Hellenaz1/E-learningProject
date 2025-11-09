@@ -1,0 +1,119 @@
+﻿<Window x:Class="PRN212_Project.CourseDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PRN212_Project"
+        mc:Ignorable="d"
+        Title="CourseDetailWindow" Height="800" Width="850">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <!-- Thong tin course -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
+
+            <RowDefinition Height="Auto"/>
+            <!-- Loc -->       
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
+
+            <!-- Review -->
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="10"/>
+
+            
+            <!-- Review cua toi -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="12"/>
+
+            <!--Button dieu hong-->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Thong tin course-->
+        <StackPanel Grid.Row="0">
+
+            <TextBlock x:Name="tbTitle"
+                 FontSize="20" FontWeight="Bold"/>
+
+            <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                <TextBlock Text="Thể loại:" FontWeight="SemiBold" FontSize="15"/>
+                <TextBlock x:Name="tbCategory" Margin="10,0,16,0" FontSize="15"/>
+
+                <TextBlock Text="Ngôn ngữ: " FontWeight="SemiBold" FontSize="15" Margin="100 0 0 0"/>
+                <TextBlock x:Name="tbLanguage" Margin="10,0,16,0" FontSize="15"/>
+
+                <TextBlock Text="Cấp độ: " FontWeight="SemiBold" FontSize="15" Margin="100 0 0 0"/>
+                <TextBlock x:Name="tbLevel" Margin="10,0,0,0" FontSize="15"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="0,6,0,0" Height="Auto">
+                <TextBlock FontWeight="SemiBold" FontSize="15" VerticalAlignment="Center"
+                 Text ="Mô tả:"  />
+                <TextBlock x:Name="tbDescription" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="770"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <TextBlock Grid.Row="2" Text="Tất cả đánh giá" FontSize="17" Margin="0 0 0 15" FontWeight="Bold"/>
+
+        <!--Loc seach-->
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <TextBlock Text="Nhập từ khóa tại đây: " VerticalAlignment="Center" FontSize="13"/>
+            <TextBox x:Name="tbSearchComment" Width="320" Height="28" Margin="10,0,20,0"/>
+
+            <TextBlock Text="Lọc: " VerticalAlignment="Center" FontSize="13"/>
+            <ComboBox x:Name="cbStarFilter" Width="120" Height="28" VerticalAlignment="Center" Margin="10 0 30 0">
+                <ComboBoxItem Content="Tất cả" Tag="all" IsSelected="True"/>
+                <ComboBoxItem Content="5 sao" Tag="5"/>
+                <ComboBoxItem Content="4 sao" Tag="4"/>
+                <ComboBoxItem Content="3 sao" Tag="3"/>
+                <ComboBoxItem Content="2 sao" Tag="2"/>
+                <ComboBoxItem Content="1 sao" Tag="1"/>
+            </ComboBox>
+
+            <Button x:Name="btnSearchFilter" Content="Tìm kiếm" Height="30" Width="80" Margin="8,0,0,0" Click="btnSearchFilter_Click"/>
+        </StackPanel>
+
+        <!--Review-->
+        <DataGrid x:Name="dgReviews" Grid.Row="5" AutoGenerateColumns="False"
+              CanUserAddRows="False" IsReadOnly="True" Margin="0 10 0 0" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Người dùng" Binding="{Binding UserName}" Width="160"/>
+                <DataGridTextColumn Header="Số sao"    Binding="{Binding Rating}"   Width="60"/>
+                <DataGridTextColumn Header="Bình luận" Binding="{Binding Comment}"  Width="*"/>
+                <DataGridTextColumn Header="Ngày bình luận" Binding="{Binding CreatedAtDisplay}" Width="140"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock x:Name="tbMyReviewTitle" Text="Đánh giá của tôi" Grid.Row="7" FontSize="17" Margin="0 0 0 15" FontWeight="Bold" Visibility="Collapsed"/>
+        <!--MyReview-->
+        <StackPanel Grid.Row="8" x:Name="panelMyReview" Orientation="Vertical" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Số sao:" VerticalAlignment="Center"/>
+                <ComboBox x:Name="cbMyRating" Width="70" Height="26" Margin="6,0">
+                    <ComboBoxItem Content="1"/>
+                    <ComboBoxItem Content="2"/>
+                    <ComboBoxItem Content="3"/>
+                    <ComboBoxItem Content="4"/>
+                    <ComboBoxItem Content="5"/>
+                </ComboBox>
+                <TextBlock Text="Bình luận:" Margin="12,0,6,0" VerticalAlignment="Center"/>
+                <TextBox x:Name="tbMyComment" Width="600" Height="26" VerticalAlignment="Center"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btnAddReview" Content="Thêm bình luận" Height="26" Margin="0 15 20 0" Click="btnAddReview_Click" Visibility="Collapsed" />
+                <Button x:Name="btnUpdateReview" Content="Cập nhật bình luận" Height="26" Margin="6,15,0,0" Click="btnUpdateReview_Click" Visibility="Collapsed"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <!--Dieu huong-->
+        <StackPanel Grid.Row="10" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnEnroll" Content="Ghi danh" Width="120" Height="30" Margin="0,0,8,0" Visibility="Collapsed"/>
+            <Button x:Name="btnClose"  Content="Đóng" Width="90"  Height="30" Click="btnClose_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

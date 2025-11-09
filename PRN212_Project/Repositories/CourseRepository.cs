@@ -18,6 +18,7 @@ namespace PRN212_Project.Repositories
         }
 
 
+        //For enroll function
         public List<Category> GetAllCategories()
         {
             return _context.Categories.OrderBy(c => c.Name).ToList();
@@ -69,6 +70,14 @@ namespace PRN212_Project.Repositories
                 };
 
             return q.ToList();
+        }
+
+        //For review
+        public Course? GetCourseById(int courseId) => _context.Courses.Include(c => c.Category).Where(c => c.CourseId == courseId).FirstOrDefault();
+
+        public bool ExistEnroll(int studentId, int courseId)
+        {
+           return _context.Enrollments.Any(e => e.StudentId == studentId && e.CourseId == courseId);
         }
     }
 }

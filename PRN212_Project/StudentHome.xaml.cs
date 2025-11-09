@@ -25,6 +25,7 @@ namespace PRN212_Project
         private UpdateStudentProfile _updateStudentProfile;
         private User _currentStudent;
         private CourseService _courseService;
+        private CourseDetailWindow _courseDetailWindow;
         public StudentHome(User student)
         {
             InitializeComponent();
@@ -143,7 +144,14 @@ namespace PRN212_Project
 
         private void BtnDetail_Click(object sender, RoutedEventArgs e)
         {
-
+            var btn = (Button)sender;
+            if (btn.Tag is int courseId)
+            {
+                _courseDetailWindow = new CourseDetailWindow(_currentStudent, courseId, true);
+                _courseDetailWindow.Show();
+                this.Close();
+            }         
+           
         }
     }
 }
