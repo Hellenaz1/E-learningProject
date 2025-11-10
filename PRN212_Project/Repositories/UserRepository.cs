@@ -34,5 +34,20 @@ namespace PRN212_Project.Repositories
         {
             return _context.Users.Where(u => u.Username == loginName || u.Email == loginName).FirstOrDefault();
         }
+
+        public User? FindById(int userId)
+        {
+            return _context.Users.FirstOrDefault(u => u.UserId == userId);
+        }
+        public void UpdatePassword(int userId, string newHashPassword)
+        {
+            var user = FindById(userId);
+            user.Password = newHashPassword;
+            _context.SaveChanges();
+        }
+        public List<User> GetAllUsers()
+        {
+            return _context.Users.ToList();
+        }
     }
 }
