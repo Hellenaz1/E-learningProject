@@ -92,5 +92,10 @@ namespace PRN212_Project.Services
             return (true, null);
         }
         
+
+        public List<User> GetAllUsers()
+        {
+            return _userRepo.GetAllUsers();
+        }
     }
 }
