@@ -33,7 +33,7 @@ namespace PRN212_Project
 
         private void Button_Click_Login(object sender, RoutedEventArgs e)
         {
-            var result = userService.Login(tbLoginName.Text, pwPassword.Password);
+            var result = userService.GetUserByNameAndPassword(tbLoginName.Text, pwPassword.Password);
             if (!result.OK)
             {
                 MessageBox.Show(result.Error, "Lỗi đăng nhập");

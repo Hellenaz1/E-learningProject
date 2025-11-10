@@ -34,10 +34,5 @@ namespace PRN212_Project.Repositories
         {
             return _context.Users.Where(u => u.Username == loginName || u.Email == loginName).FirstOrDefault();
         }
-
-        public List<User> GetAllUsers()
-        {
-            return _context.Users.ToList();
-        }
     }
 }

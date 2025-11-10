@@ -52,7 +52,6 @@ namespace PRN212_Project
                 MessageBox.Show(result.Error, "Lỗi khi đăng kí");
                 return;
             }
-
             
         }
 

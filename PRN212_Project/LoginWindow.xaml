@@ -55,10 +55,10 @@
                            Margin="0 0 0 20"/>
 
                 <Image Grid.Column="0" Grid.Row="1" Source="/Image/user.png" Width="20" Height="20"/>
-                <TextBox x:Name="tbLoginName" Grid.Column="1" Grid.Row="1" Margin="0,5,0,5"></TextBox>
+                <TextBox x:Name="tbLoginName" Grid.Column="1" Grid.Row="1" Margin="0,5,0,5" VerticalAlignment="Center"></TextBox>
 
                 <Image Grid.Column="0" Grid.Row="2" Source="/Image/padlock.png" Width="20" Height="20"/>
-                <PasswordBox x:Name="pwPassword" Grid.Column="1" Grid.Row="2" Margin="0,5,0,5"></PasswordBox>
+                <PasswordBox x:Name="pwPassword" Grid.Column="1" Grid.Row="2" Margin="0,5,0,5" VerticalAlignment="Center"></PasswordBox>
 
                 <Border Grid.Row="3" Grid.ColumnSpan="2" CornerRadius="20" BorderBrush="Black" BorderThickness="1" Width="200"  Height="50" Margin="0 10 0 0">
                     <Button 
