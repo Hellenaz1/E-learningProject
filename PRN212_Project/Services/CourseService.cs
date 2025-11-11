@@ -13,7 +13,14 @@ namespace PRN212_Project.Services
     {
         private CourseRepository _courseRepository = new CourseRepository();
         private PrnProjectContext _context = new PrnProjectContext();
+        
 
+        public List<(Course Course, bool IsEnrolled)> BrowseCourse(
+            string? keyword, int? categoryId, string? level, string? language, string? sortTag, int studentId
+            )
+        {
+            return _courseRepository.BrowseCourse( keyword, categoryId, level, language, sortTag, studentId );
+        }
         public List<Enrollment> GetEnrolledCourses(int studentId, string? keyword, int? categoryId, string? level, string? language, string? sortTag)
         {
            return _courseRepository.GetEnrolledCourses(studentId, keyword, categoryId, level, language, sortTag);
@@ -27,6 +34,7 @@ namespace PRN212_Project.Services
 
         public Course GetCourseById(int courseId) => _courseRepository.GetCourseById(courseId);
 
+        public (bool OK, string? Error) EnrollCourse(int studentId, int courseId) => _courseRepository.EnrollCourse(studentId, courseId);
         public bool ExistEnroll(int studentId, int courseId) => _courseRepository.ExistEnroll(studentId, courseId);
 
     }

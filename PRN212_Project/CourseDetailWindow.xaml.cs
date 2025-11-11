@@ -25,17 +25,20 @@ namespace PRN212_Project
     {
         private CourseService _courseService = new CourseService();
         private ReviewService _reviewService = new ReviewService();
-        private StudentHome studentHome;
+        private StudentHome _studentHome;
+        private BrowseCourseWindow _browseCourseWindow;
         private int studentId;
         private int courseId;
         private bool canReview;
         private User user;
-        public CourseDetailWindow(User u, int courseId, bool canReview)
+        private string from;
+        public CourseDetailWindow(User u, int courseId, bool canReview, string from)
         {
             InitializeComponent();
             this.studentId = u.UserId;
             this.courseId = courseId;
             this.canReview = canReview;
+            this.from = from;
             this.user = u;
             setUpMyReview();
             LoadData();
@@ -172,9 +175,17 @@ namespace PRN212_Project
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            studentHome = new StudentHome(user);
-            studentHome.Show();
-            this.Close();
+            _studentHome = new StudentHome(user);
+            _browseCourseWindow = new BrowseCourseWindow(user);
+            if(from == "home")
+            {
+                _studentHome.Show();
+                this.Close();
+            }else if(from == "browse")
+            {
+                _browseCourseWindow.Show();
+                this.Close();
+            }
         }
     }
 }

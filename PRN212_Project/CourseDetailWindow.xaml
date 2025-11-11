@@ -112,7 +112,6 @@
 
         <!--Dieu huong-->
         <StackPanel Grid.Row="10" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="btnEnroll" Content="Ghi danh" Width="120" Height="30" Margin="0,0,8,0" Visibility="Collapsed"/>
             <Button x:Name="btnClose"  Content="Đóng" Width="90"  Height="30" Click="btnClose_Click"/>
         </StackPanel>
     </Grid>
