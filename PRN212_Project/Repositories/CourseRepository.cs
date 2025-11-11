@@ -16,7 +16,64 @@ namespace PRN212_Project.Repositories
         {
             _context = new PrnProjectContext();
         }
+        //For browse course
+        public List<(Course Course, bool IsEnrolled)> BrowseCourse(
+            string? keyword, int? categoryId, string? level, string? language, string? sortTag, int studentId
+            )
+        {
+            //lay ten category va tat ca id course da enroll de hien thi
 
+            var q = _context.Courses.Include(c => c.Category).Select(c => new {Course = c, IsEnrolled = c.Enrollments.Any(e => e.StudentId == studentId) });
+
+            //filter
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                var kw = keyword.Trim();
+                q = q.Where(c => c.Course.Title.Contains(kw));
+            }
+
+            if (categoryId.HasValue && categoryId.Value > 0)
+                q = q.Where(c => c.Course.CategoryId == categoryId.Value);
+
+            if (!string.IsNullOrWhiteSpace(level) && level != "Tất cả")
+                q = q.Where(c => c.Course.Level == level);
+
+            if (!string.IsNullOrWhiteSpace(language) && language != "Tất cả")
+                q = q.Where(c => c.Course.Language == language);
+
+            //sort
+            q = sortTag switch
+            {
+                "createdAsc" => q.OrderBy(c => c.Course.CreatedAt),
+                "createdDesc" => q.OrderByDescending(c => c.Course.CreatedAt),
+                "titleAsc" => q.OrderBy(c => c.Course.Title),
+                "titleDesc" => q.OrderByDescending(c => c.Course.Title),
+                _ => q.OrderBy(c => c.Course.CreatedAt)
+            };
+
+
+            return q.AsEnumerable().Select(x => (x.Course, x.IsEnrolled)).ToList();
+        }
+
+        public (bool OK, string? Error) EnrollCourse(int studentId, int courseId)
+        {
+            if (ExistEnroll(studentId, courseId))
+            {
+                return (false, "Bạn đã ghi danh khóa học này rồi.");
+
+            }
+            var enroll = new Enrollment
+            {
+                StudentId = studentId,
+                CourseId = courseId,
+                EnrolledAt = DateOnly.FromDateTime(DateTime.Now)
+            };
+
+            _context.Add(enroll);
+            _context.SaveChanges();
+            return (true, null);
+
+        }
 
         //For enroll function
         public List<Category> GetAllCategories()

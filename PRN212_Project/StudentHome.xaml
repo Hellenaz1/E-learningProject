@@ -89,9 +89,8 @@
         </StackPanel>
 
         <!--List cac enroll coure-->
-        <DataGrid x:Name="dgEnrolled"
-            Grid.Row="6" AutoGenerateColumns="False"
-            CanUserAddRows="False" IsReadOnly="True">
+        <DataGrid x:Name="dgEnrolled" Grid.Row="6" AutoGenerateColumns="False"
+            CanUserAddRows="False" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Tiêu đề"
                         Binding="{Binding Title}"
