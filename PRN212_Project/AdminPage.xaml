@@ -9,10 +9,8 @@
         WindowStartupLocation="CenterScreen"
         Background="#F3F4F6">
     <Window.Resources>
-       
-        <SolidColorBrush x:Key="BgSidebar" Color="#FF6C8FD9"/>
-        <SolidColorBrush x:Key="BgHover" Color="#374151"/>
-        <SolidColorBrush x:Key="BgActive" Color="#2563EB"/>
+        <SolidColorBrush x:Key="BgSidebar" Color="#4F46E5"/>
+        <SolidColorBrush x:Key="BgHover" Color="#4338CA"/>
         <SolidColorBrush x:Key="TextLight" Color="#E5E7EB"/>
 
         <Style x:Key="NavButton" TargetType="Button">
@@ -34,9 +32,6 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="{StaticResource BgHover}"/>
                             </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Opacity" Value="0.8"/>
-                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -46,45 +41,127 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="230"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        
         <Border Grid.Column="0" Background="{StaticResource BgSidebar}">
-            <DockPanel>
-              
-                <StackPanel DockPanel.Dock="Top" Margin="16,20,0,20">
-                    <TextBlock Text="LMS Admin"
-                               Foreground="White"
-                               FontSize="22"
-                               FontWeight="Bold"/>
-                    <TextBlock Text="Quản trị hệ thống"
-                               Foreground="#9CA3AF"
-                               FontSize="12"/>
-                </StackPanel>
+            <StackPanel>
+                <TextBlock Text="LMS Admin"
+                           Foreground="White"
+                           FontSize="22"
+                           FontWeight="Bold"
+                           Margin="16,24,0,20"/>
 
-                <StackPanel>
-                    <Button x:Name="BtnUsers"
-                            Style="{StaticResource NavButton}"
-                            Content="👤  Quản lý User"
-                            />
+                <Button x:Name="BtnUsers"
+                        Style="{StaticResource NavButton}"
+                        Content="👤  Quản lý User"
+                        Background="#4338CA"
+                        />
 
-                    <Button x:Name="BtnCourses"
-                            Style="{StaticResource NavButton}"
-                            Content="📚  Quản lý Khóa học"
-                            />
-                </StackPanel>
-
-            
-            </DockPanel>
+                <Button x:Name="BtnCourses"
+                        Style="{StaticResource NavButton}"
+                        Content="📚  Quản lý Khóa học"
+                        Click="BtnCourses_Click"/>
+            </StackPanel>
         </Border>
 
        
-        <Grid Grid.Column="1" Margin="16">
-            <Border Background="White"
-                    CornerRadius="10"
-                    Padding="20">
-                <ContentControl x:Name="ContentHost"/>
+        <Grid Grid.Column="1" Margin="20,20,20,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+           
+            <TextBlock Text="Quản lý người dùng"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Margin="5,0,0,10"/>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,10">
+                <TextBox x:Name="txtSearch"
+                         Width="300"
+                         Height="32"
+                         VerticalContentAlignment="Center"
+                         Padding="8"
+                         FontSize="13"
+                         Background="White"
+                         BorderBrush="#D1D5DB"
+                         BorderThickness="1"
+                         />
+                <Button Content="🔍 Tìm" Width="80" Background="#2563EB" Foreground="White"
+            Click="BtnSearch_Click"/>
+            </StackPanel>
+
+            <Border Grid.Row="2" Background="White" CornerRadius="10" Padding="10">
+                <DataGrid x:Name="dgUsers"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          HeadersVisibility="Column"
+                          IsReadOnly="True"
+                          BorderThickness="0"
+                          RowHeaderWidth="0"
+                          AlternatingRowBackground="#F3F4F6"
+                          FontSize="13">
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="Tên đăng nhập" Binding="{Binding Username}" Width="120"/>
+                        <DataGridTextColumn Header="Họ tên" Binding="{Binding FullName}" Width="150"/>
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="250"/>
+
+                        <DataGridTemplateColumn Header="Vai trò" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Background="#3B82F6"
+                                            CornerRadius="15"
+                                            Padding="6,1"
+                                            MinWidth="60"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Role}"
+                                                   Foreground="White"
+                                                   FontWeight="Bold"
+                                                   FontSize="11"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   TextAlignment="Center"/>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Thao tác" Width="90">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button Content="✏️"
+                                                Width="28"
+                                                Height="28"
+                                                Margin="2"
+                                                Padding="0"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Tag="{Binding UserId}"
+                                                Click="EditUser_Click"/>
+                                        <Button Content="🗑️"
+                                                Width="28"
+                                                Height="28"
+                                                Margin="2"
+                                                Padding="0"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Tag="{Binding UserId}"
+                                                Click="DeleteUser_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
             </Border>
         </Grid>
     </Grid>
