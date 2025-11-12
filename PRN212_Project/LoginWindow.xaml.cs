@@ -19,6 +19,7 @@ namespace PRN212_Project
     {
         private StudentHome studentHome;
         private UserService userService = new UserService();
+        private AdminPage adminPage;
         public MainWindow()
         {
             InitializeComponent();
@@ -43,6 +44,11 @@ namespace PRN212_Project
             {
                 studentHome = new StudentHome(result.User);
                 studentHome.Show();
+                this.Close();
+            }else if(result.User.Role == "admin")
+            {
+                adminPage = new AdminPage();
+                adminPage.Show();
                 this.Close();
             }
 

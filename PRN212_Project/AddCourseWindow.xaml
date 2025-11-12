@@ -13,7 +13,7 @@
     <Border Background="White" CornerRadius="8" Padding="30" Margin="20" BorderBrush="#E5E7EB" BorderThickness="1">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical">
-                <!-- 🔹 Tiêu đề -->
+                <!-- Tiêu đề -->
                 <TextBlock x:Name="txtHeader"
                            Text="Tạo khóa học mới"
                            FontSize="20"
@@ -21,24 +21,24 @@
                            Foreground="#111827"
                            Margin="0,0,0,20"/>
 
-                <!-- 🔹 Tên khóa học -->
+                <!-- Tên khóa học -->
                 <StackPanel Margin="0,0,0,15">
                     <TextBlock Text="Tên khóa học *" FontWeight="SemiBold"/>
                     <TextBox x:Name="txtTitle" Margin="0,5,0,0" Padding="6"/>
                 </StackPanel>
 
-                <!-- 🔹 Ngôn ngữ -->
+                <!-- Ngôn ngữ -->
                 <StackPanel Margin="0,0,0,15">
                     <TextBlock Text="Ngôn ngữ *" FontWeight="SemiBold"/>
                     <ComboBox x:Name="cbLanguage" Margin="0,5,0,0" Padding="6">
                         <ComboBoxItem Content="English"/>
                         <ComboBoxItem Content="Vietnamese"/>
-                        <ComboBoxItem Content="Japanese"/>
-                        <ComboBoxItem Content="Korean"/>
+                        <!--<ComboBoxItem Content="Japanese"/>
+                        <ComboBoxItem Content="Korean"/>-->
                     </ComboBox>
                 </StackPanel>
 
-                <!-- 🔹 Cấp độ -->
+                <!-- Cấp độ -->
                 <StackPanel Margin="0,0,0,15">
                     <TextBlock Text="Cấp độ *" FontWeight="SemiBold"/>
                     <ComboBox x:Name="cbLevel" Margin="0,5,0,0" Padding="6">
@@ -48,19 +48,19 @@
                     </ComboBox>
                 </StackPanel>
 
-                <!-- 🔹 Danh mục -->
+                <!-- Danh mục -->
                 <StackPanel Margin="0,0,0,15">
                     <TextBlock Text="Danh mục *" FontWeight="SemiBold"/>
                     <ComboBox x:Name="cbCategory" Margin="0,5,0,0" Padding="6"/>
                 </StackPanel>
 
-                <!-- 🔹 Mô tả -->
+                <!-- Mô tả -->
                 <StackPanel Margin="0,0,0,15">
                     <TextBlock Text="Mô tả khóa học" FontWeight="SemiBold"/>
                     <TextBox x:Name="txtDescription" Margin="0,5,0,0" Padding="6" AcceptsReturn="True" Height="100"/>
                 </StackPanel>
 
-                <!-- 🔹 Nút hành động -->
+                <!-- Nút hành động -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
                     <Button Content="Hủy" Width="80" Margin="0,0,10,0" Click="Cancel_Click"/>
                     <Button x:Name="btnSave"

@@ -47,15 +47,15 @@
 
             <StackPanel Grid.Row="4">
                 <TextBlock TextWrapping="Wrap" Text="Nhập lại mật Khẩu" Margin=" 8 0 0 10"/>
-                <PasswordBox  x:Name="pwRePassword"  Width="366"/>
+                <PasswordBox x:Name="pwRePassword"  Width="366"/>
             </StackPanel>
 
             <StackPanel Grid.Row="5">
                 <TextBlock TextWrapping="Wrap" Text="Giới Tính" Margin=" 8 0 0 10"/>
                 <Grid Margin=" 10 0 0 0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <RadioButton x:Name="rbMale" Grid.Column="0" Content="Nam"/>
                     <RadioButton x:Name="rbFemale" Grid.Column="1" Content="Nữ"/>
