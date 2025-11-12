@@ -13,39 +13,31 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PRN212_Project.Models;
 using PRN212_Project.Services;
-
 namespace PRN212_Project
 {
     /// <summary>
-    /// Interaction logic for StudentHome.xaml
+    /// Interaction logic for BrowseCourseWindow.xaml
     /// </summary>
-    public partial class StudentHome : Window
+    public partial class BrowseCourseWindow : Window
     {
-        private ChangePasswordWindow _changePasswordWindow;
-        private UpdateStudentProfile _updateStudentProfile;
         private User _currentStudent;
-        private CourseService _courseService;
+        private StudentHome _studentHome;
         private CourseDetailWindow _courseDetailWindow;
-        private BrowseCourseWindow _browseCourseWindow;
-        public StudentHome(User student)
+        private CourseService _courseService = new CourseService();
+
+        public BrowseCourseWindow(User student)
         {
             InitializeComponent();
             _currentStudent = student;
-            _courseService = new CourseService();
             LoadData();
             ReloadGrid();
-
         }
-
-        public void LoadData()
+        private void LoadData()
         {
-            string welcomeName = (_currentStudent.FullName != null ? _currentStudent.FullName : _currentStudent.Username);
-            tbWelcome.Text = $"Xin chào {welcomeName}";
             LoadCategory();
             LoadLevel();
             LoadLanguage();
         }
-
         private void LoadCategory()
         {
             var list = _courseService.GetAllCategories();
@@ -85,7 +77,7 @@ namespace PRN212_Project
 
             string? language = (cbLanguage.SelectedItem as string) == "Tất cả" ? null : (cbLanguage.SelectedItem as string);
 
-            string? keyword = (!string.IsNullOrWhiteSpace(tbSearchKey.Text)) ? tbSearchKey.Text.Trim() : null;
+            string? keyword = (!string.IsNullOrWhiteSpace(tbKeyword.Text)) ? tbKeyword.Text.Trim() : null;
 
             string? sortTag = (cbSort.SelectedItem as ComboBoxItem)?.Tag?.ToString();
 
@@ -97,64 +89,66 @@ namespace PRN212_Project
             return (categoryId, level, language, keyword, sortTag);
         }
 
-
         private void ReloadGrid()
         {
-            var result = _courseService.GetEnrolledCourses(_currentStudent.UserId, ReadFilters().keyword, ReadFilters().categoryId,
-                         ReadFilters().level, ReadFilters().language, ReadFilters().sortTag);
+            var result = _courseService.BrowseCourse(ReadFilters().keyword, ReadFilters().categoryId,
+                         ReadFilters().level, ReadFilters().language, ReadFilters().sortTag, _currentStudent.UserId);
 
             //khoi tao anonymous class gan vao data grid
-            var display = result.Select(e => new
+            var display = result.Select(c => new
             {
-                e.Course.CourseId,
-                Title = e.Course.Title,
-                Category = e.Course.Category?.Name,
-                Level = e.Course.Level,
-                Language = e.Course.Language,
-                EnrollAtDisplay = e.EnrolledAt.ToString(),
+                c.Course.CourseId,
+                Title = c.Course.Title,
+                Category = c.Course.Category?.Name,
+                Level = c.Course.Level,
+                Language = c.Course.Language,
+                CreatedAtDisplay = c.Course.CreatedAt,
+                EnrollVisibility = c.IsEnrolled ? Visibility.Collapsed : Visibility.Visible,
+                EnrolledVisibility = c.IsEnrolled ? Visibility.Visible : Visibility.Collapsed
             }).ToList();
 
-            dgEnrolled.ItemsSource = display;
+            dgCourse.ItemsSource = display;
         }
 
-        private void BtnBrowseCourses_Click(object sender, RoutedEventArgs e)
-        {
-            _browseCourseWindow = new BrowseCourseWindow(_currentStudent);
-            _browseCourseWindow.Show();
-            this.Close();
-        }
-
-        private void BtnUpdateProfile_Click(object sender, RoutedEventArgs e)
-        {
-            _updateStudentProfile = new UpdateStudentProfile(_currentStudent);
-            _updateStudentProfile.Show();
-            this.Close();
-        }
-
-        private void BtnChangePassword_Click(object sender, RoutedEventArgs e)
-        {
-            _changePasswordWindow = new ChangePasswordWindow(_currentStudent);
-
-            _changePasswordWindow.Show();
-            this.Close();
-
-        }
-
-        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             ReloadGrid();
         }
 
-        private void BtnDetail_Click(object sender, RoutedEventArgs e)
+        private void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
-            var btn = (Button)sender;
+            _studentHome = new StudentHome(_currentStudent);
+            _studentHome.Show();
+            this.Close();
+        }
+
+        private void ButtonDetail_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
             if (btn.Tag is int courseId)
             {
-                _courseDetailWindow = new CourseDetailWindow(_currentStudent, courseId, true, "home");
+                bool canReview = _courseService.ExistEnroll(_currentStudent.UserId, courseId);
+                _courseDetailWindow = new CourseDetailWindow(_currentStudent, courseId, canReview, "browse");
                 _courseDetailWindow.Show();
                 this.Close();
-            }         
-           
+            }
+        }
+
+        private void ButtonEnroll_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is int courseId)
+            {
+                var result = _courseService.EnrollCourse(_currentStudent.UserId, courseId);
+                if (!result.OK)
+                {
+                    MessageBox.Show(result.Error, "Lỗi");
+                    return;
+                }
+
+                MessageBox.Show("Ghi danh thành công!", "Thông báo");                       
+
+                ReloadGrid();
+            }
         }
     }
 }
