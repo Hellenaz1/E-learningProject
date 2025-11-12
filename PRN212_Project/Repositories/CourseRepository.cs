@@ -136,5 +136,20 @@ namespace PRN212_Project.Repositories
         {
            return _context.Enrollments.Any(e => e.StudentId == studentId && e.CourseId == courseId);
         }
+
+
+        public List<Course> GetAllCourses()
+        {
+            return _context.Courses.Include(c => c.Category).ToList();
+        }
+        public bool DeleteCourse(int id)
+        {
+            var course = _context.Courses.FirstOrDefault(c => c.CourseId == id);
+            if (course == null) return false;
+
+            _context.Courses.Remove(course);
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

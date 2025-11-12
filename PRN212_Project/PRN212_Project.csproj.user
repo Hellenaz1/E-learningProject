@@ -2,7 +2,11 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+
+    <Compile Update="AddCourseWindow.xaml.cs">
+
     <Compile Update="BrowseCourseWindow.xaml.cs">
+
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ChangePasswordWindow.xaml.cs">
@@ -14,13 +18,16 @@
     <Compile Update="AdminPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="CourseManagementWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="EditUserWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="SignUpWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="StudentHome.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="UserManagementView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="UpdateStudentProfile.xaml.cs">

@@ -1,4 +1,5 @@
-﻿using PRN212_Project.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PRN212_Project.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,6 +49,39 @@ namespace PRN212_Project.Repositories
         public List<User> GetAllUsers()
         {
             return _context.Users.ToList();
+        }
+        public bool DeleteUser(int userId)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+            if (user == null) return false;
+
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+            return true;
+        }
+        public bool UpdateUserRole(int userId, string newRole)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+            if (user == null) return false;
+
+            user.Role = newRole;  
+            _context.SaveChanges();
+            return true;
+        }
+        public List<User> SearchUsers(string keyword)
+        {
+            using (var context = new PrnProjectContext())
+            {
+                if (string.IsNullOrWhiteSpace(keyword))
+                    return context.Users.ToList(); 
+
+                keyword = keyword.ToLower().Trim();
+                return context.Users.Where(u =>
+                        u.Username.ToLower().Contains(keyword) ||
+                        u.FullName.ToLower().Contains(keyword) ||
+                        u.Email.ToLower().Contains(keyword))
+                    .ToList();
+            }
         }
     }
 }

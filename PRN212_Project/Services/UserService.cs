@@ -97,5 +97,34 @@ namespace PRN212_Project.Services
         {
             return _userRepo.GetAllUsers();
         }
+
+        public (bool OK, string? Error) DeleteUser(int userId)
+        {
+            var user = _userRepo.GetAllUsers().FirstOrDefault(u => u.UserId == userId);
+            if (user == null)
+                return (false, "Người dùng không tồn tại!");
+
+            var deleted = _userRepo.DeleteUser(userId);
+            if (!deleted)
+                return (false, "Xóa người dùng thất bại!");
+
+            return (true, null);
+        }
+        public (bool OK, string? Error) UpdateUserRole(int userId, string newRole)
+        {
+            if (newRole != "admin" && newRole != "student")
+                return (false, "Vai trò không hợp lệ.");
+
+            bool updated = _userRepo.UpdateUserRole(userId, newRole);
+            if (!updated)
+                return (false, "Không tìm thấy người dùng để cập nhật.");
+
+            return (true, null);
+        }
+
+        public List<User> SearchUsers(string keyword)
+        {
+            return _userRepo.SearchUsers(keyword);
+        }
     }
 }
